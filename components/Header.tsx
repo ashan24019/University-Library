@@ -10,8 +10,8 @@ const Header = () => {
   const pathname = usePathname();
 
   return (
-    <header className="my-10 flex justify-between gap-5">
-      <Link href="/">
+    <header className="w-full my-10 flex justify-between items-center gap-5">
+      <Link href="/" className="hover:opacity-80 transition-opacity">
         <Image src="/icons/logo.svg" alt="logo" width={40} height={40}/>
       </Link>
       <ul className="flex flex-row items-center gap-8">
@@ -19,8 +19,8 @@ const Header = () => {
           <Link
             href="/library"
             className={cn(
-              "text-base cursor-pointer capitalize",
-              pathname === "/library" ? "text-[#F5E6D5]" : "text-[#D9B28B]"
+              "text-base font-medium cursor-pointer capitalize transition-colors",
+              pathname === "/library" ? "text-[#F5E6D5]" : "text-[#D9B28B] hover:text-[#F5E6D5"
             )}
           >
             Library
