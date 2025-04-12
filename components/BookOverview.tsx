@@ -14,11 +14,11 @@ const BookOverview = ({
   cover,
 }: Book) => {
   return (
-    <section className="text-5xl font-semibold text-white md:text-7xl">
+    <section className="book-overview">
         <div className="flex flex-1 flex-col gap-5">
         <h1>{title}</h1>
 
-        <div className="mt-7 flex flex-row flex-wrap gap-4 text-xl text-[#D6E0FF]">
+        <div className="book-info">
           <p>
             By <span className="font-semibold text-[#D9B28B]">{author}</span>
           </p>
@@ -34,16 +34,16 @@ const BookOverview = ({
             <p className="text-2xl">{rating}</p>
           </div>
 
-        <div className="text-2xl flex flex-row flex-wrap gap-4 mt-1">
+        <div className="book-copies">
             <p>
-                Total Books: <span className="text-[#F5E6D5]">{totalCopies}</span>
+                Total Books: <span>{totalCopies}</span>
             </p>
 
             <p>
-                Available Books: <span className="text-[#F5E6D5]">{availableCopies}</span>
+                Available Books: <span>{availableCopies}</span>
             </p>
         </div>
-        <p className="mt-2 text-justify text-xl text-[#F5E6D5]">{description}</p>
+        <p className="book-description">{description}</p>
 
         <Button className="mt-4 min-h-14 w-fit bg-[#E7C9A5] text-[#16191E] hover:bg-[#E7C9A5]/80 max-md:w-full">
             <Image src="/icons/book.svg" alt="book" width={20} height={20}/>
