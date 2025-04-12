@@ -19,8 +19,8 @@ const Header = () => {
           <Link
             href="/library"
             className={cn(
-              "text-base cursor-pointer capitalize",
-              pathname === "/library" ? "text-[#F5E6D5]" : "text-[#D9B28B]"
+              'text-base cursor-pointer capitalize',
+              pathname === '/library' ? 'text-light-200' : 'text-light-100'
             )}
           >
             Library
