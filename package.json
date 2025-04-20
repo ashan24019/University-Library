@@ -36,7 +36,7 @@
     "imagekitio-react": "^4.3.0",
     "lucide-react": "^0.469.0",
     "next": "15.1.2",
-    "next-auth": "^5.0.0-beta.25",
+    "next-auth": "^5.0.0-beta.26",
     "pg": "^8.14.1",
     "react": "^19.0.0",
     "react-colorful": "^5.6.1",
