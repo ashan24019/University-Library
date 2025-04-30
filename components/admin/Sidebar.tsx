@@ -14,9 +14,14 @@ const Sidebar = ({ session }: { session: Session }) => {
   return (
     <div className="admin-sidebar">
       <div>
-        <div>
-          <Image src="/icons/admin/logosvg" alt="log" height={37} width={37} />
-          <h1>BookWise</h1>
+        <div className="flex flex-row items-center gap-3">
+          <Image
+            src="/icons/admin/logo.svg"
+            alt="logo"
+            height={37}
+            width={37}
+          />
+          <h1 className="text-2xl font-semibold text-primary-admin max-md:hidden">BookWise</h1>
         </div>
 
         <div className="mt-10 flex flex-col gap-5">
