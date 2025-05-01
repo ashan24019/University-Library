@@ -1,4 +1,4 @@
-"use client;";
+"use client";
 
 import config from "@/lib/config";
 import { IKUpload, IKImage, IKContext, IKVideo } from "imagekitio-react";
@@ -19,11 +19,11 @@ const authenticator = async () => {
 
     if (!response.ok) {
       const errorText = await response.text();
-
       throw new Error(
         `Request failed with status ${response.status}: ${errorText}`
       );
     }
+
     const data = await response.json();
     const { signature, expire, token } = data;
 
@@ -52,11 +52,10 @@ const FileUpload = ({
   onFileChange,
   value,
 }: Props) => {
-  const ikUploadRef = useRef(null);
-  const [file, setFile] = useState<{ filePath: string  | null}>({
-    filePath:value ?? null,
+  const ikUploadRef = useRef<HTMLInputElement | null>(null);
+  const [file, setFile] = useState<{ filePath: string | null }>({
+    filePath: value ?? null,
   });
-
   const [progress, setProgress] = useState(0);
 
   const styles = {
@@ -69,8 +68,7 @@ const FileUpload = ({
   };
 
   const onError = (error: any) => {
-    console.log(error);
-
+    console.error(error);
     toast({
       title: `${type} upload failed`,
       description: `Your ${type} could not be uploaded. Please try again.`,
@@ -83,30 +81,20 @@ const FileUpload = ({
     onFileChange(res.filePath);
 
     toast({
-      title: `${type} upload successfully`,
+      title: `${type} uploaded successfully`,
       description: `${res.filePath} uploaded successfully!`,
     });
   };
 
   const onValidate = (file: File) => {
-    if (type === "image") {
-      if (file.size > 20 * 1024 * 1024) {
-        toast({
-          title: "File size too large",
-          description: "Please upload a file that is less than 20MB size",
-          variant: "destructive",
-        });
-        return false;
-      } 
-      }else if(type === 'video'){
-
-        if (file.size > 50 * 1024 * 1024) {
-          toast({
-            title: "File size too large",
-            description: "Please upload a file that is less than 20MB size",
-            variant: "destructive",
-          });
-          return false;
+    const sizeLimitMB = type === "image" ? 20 : 50;
+    if (file.size > sizeLimitMB * 1024 * 1024) {
+      toast({
+        title: "File size too large",
+        description: `Please upload a file less than ${sizeLimitMB}MB in size.`,
+        variant: "destructive",
+      });
+      return false;
     }
     return true;
   };
@@ -125,8 +113,8 @@ const FileUpload = ({
         useUniqueFileName={true}
         validateFile={onValidate}
         onUploadStart={() => setProgress(0)}
-        onUploadProgress={({loaded, total}) => {
-          const percent = Math.round((loaded/total) * 100);
+        onUploadProgress={({ loaded, total }) => {
+          const percent = Math.round((loaded / total) * 100);
           setProgress(percent);
         }}
         folder={folder}
@@ -134,15 +122,11 @@ const FileUpload = ({
         fileName="test-upload.png"
       />
 
-<button
+      <button
         className={cn("upload-btn", styles.button)}
         onClick={(e) => {
           e.preventDefault();
-
-          if (ikUploadRef.current) {
-            // @ts-ignore
-            ikUploadRef.current?.click();
-          }
+          ikUploadRef.current?.click();
         }}
       >
         <Image
@@ -152,38 +136,39 @@ const FileUpload = ({
           height={20}
           className="object-contain"
         />
-
         <p className={cn("text-base", styles.placeholder)}>{placeholder}</p>
-
-        {file && (
+        {file.filePath && (
           <p className={cn("upload-filename", styles.text)}>{file.filePath}</p>
         )}
-      </button> 
+      </button>
 
-      {progress > 0 && (
-        <div className="w-full rounded-full bg-green-200">
-          <div className="progress" style={{width: `${progress}%`}}>
+      {progress > 0 && progress != 100 && (
+        <div className="mt-2 w-full  rounded-full bg-green-200 ">
+          <div
+            className="progress text-sm text-center rounded-full bg-green-500 text-white "
+            style={{ width: `${progress}%` }}
+          >
             {progress}%
           </div>
         </div>
       )}
 
-      {file && 
-        (type === 'image' ? (<IKImage
-          alt={file.filePath}
-          path={file.filePath}
-          width={500}
-          height={500}
-        />
-      ):type === 'video'? (
-        <IKVideo
-          path={file.filePath}
-          controls= {true}
-          className="h-96 w-full rounded-xl"
-        />
-      ): null)
-        
-      }
+      {file.filePath &&
+        (type === "image" ? (
+          <IKImage
+            alt="uploaded-image"
+            path={file.filePath}
+            width={500}
+            height={500}
+            className="mt-4 rounded-xl"
+          />
+        ) : (
+          <IKVideo
+            path={file.filePath}
+            controls
+            className="h-96 w-full rounded-xl mt-4"
+          />
+        ))}
     </IKContext>
   );
 };

@@ -61,7 +61,7 @@ const AuthForm = <T extends FieldValues>({
       router.push("/");
     } else {
       toast({
-        title: `Error ${isSignIn ? "signing in": "signing up"}`,
+        title: `Error ${isSignIn ? "signing in" : "signing up"}`,
         description: result.error ?? "An error occurred",
         variant: "destructive",
       });
@@ -95,7 +95,14 @@ const AuthForm = <T extends FieldValues>({
                   </FormLabel>
                   <FormControl>
                     {field.name === "universityCard" ? (
-                      <FileUpload onFileChange={field.onChange} />
+                      <FileUpload
+                        type="image"
+                        accept="image/*"
+                        placeholder="Upload your ID"
+                        folder="ids"
+                        variant="dark"
+                        onFileChange={field.onChange}
+                      />
                     ) : (
                       <Input
                         required
