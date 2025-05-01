@@ -164,7 +164,7 @@ const BookForm = ({ type, ...book }: Props) => {
                   type="number"
                   min={1}
                   max={10000}
-                  placeholder="Total copies"
+                  placeholder="Total  "
                   {...field}
                   className="book-form_input"
                 />
